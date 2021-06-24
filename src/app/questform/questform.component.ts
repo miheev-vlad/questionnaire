@@ -32,7 +32,6 @@ export class QuestformComponent implements OnInit {
   get subscribe() {
     return this.questionnaireForm.get('subscribe');
   }
-  
   constructor(private fb: FormBuilder, private _http: HttpService, private router: Router) { }
   ngOnInit() {
     this._http.getRF()
