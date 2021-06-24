@@ -1,0 +1,184 @@
+<section class="questionnaire">
+  <div class="container">
+    <div class="container-fluid shadow p-3 mb-5 bg-body rounded form-background">
+      <div class="questionnaire-container">
+        <div class="questionnaire-header">
+          <h2>Анкета для заполнения</h2>
+          <img src="assets/img/undraw_Done_re_oak4.svg" class="my-img-fluid" alt="my_answer" >
+        </div>
+        <div class="questionnaire-form p-3">
+          <form [formGroup]="questionnaireForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-3">
+              <label>Фамилия</label>
+              <input
+                type="text"
+                list="lastName-datalist"
+                formControlName="lastName"
+                class="form-control"
+                (ngModelChange)="getSearchLastName()"
+                [class.is-invalid]="lastName!.errors?.maxlength || lastName!.errors?.pattern"
+                [class.is-invalid]="lastName!.invalid && lastName!.touched"
+              />
+              <div *ngIf="lastName!.errors?.maxlength || lastName!.errors?.pattern">
+                <small *ngIf="lastName!.errors?.maxlength" class="text-danger"
+                  >Максимум 50 символов </small
+                >
+                <small *ngIf="lastName!.errors?.pattern" class="text-danger"
+                  >Только русские буквы </small
+                >
+              </div>
+              <div *ngIf="lastName!.invalid && lastName!.touched">
+                <small *ngIf="lastName!.errors?.required" class="text-danger"
+                  >Поле обязательно для заполнения</small
+                >
+              </div>
+              <datalist id="lastName-datalist">
+                <option
+                  *ngFor="let sugg of suggs.suggestions"
+                  [value]="sugg.value"
+                ></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-3">
+              <label>Имя</label>
+              <input
+                type="text"
+                list="userName-datalist"
+                formControlName="userName"
+                class="form-control"
+                (ngModelChange)="getSearchUserName()"
+                [class.is-invalid]="userName!.errors?.maxlength || userName!.errors?.pattern"
+                [class.is-invalid]="userName!.invalid && userName!.touched"
+              />
+              <div *ngIf="userName!.errors?.maxlength || userName!.errors?.pattern">
+                <small *ngIf="userName!.errors?.maxlength" class="text-danger"
+                  >Максимум 50 символов </small
+                >
+                <small *ngIf="userName!.errors?.pattern" class="text-danger"
+                  >Только русские буквы </small
+                >
+              </div>
+              <div *ngIf="userName!.invalid && userName!.touched">
+                <small *ngIf="userName!.errors?.required" class="text-danger"
+                  >Поле обязательно для заполнения</small
+                >
+              </div>
+              <datalist id="userName-datalist">
+                <option
+                  *ngFor="let sugg of suggs.suggestions"
+                  [value]="sugg.value"
+                ></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-3">
+              <label>Отчество</label>
+              <input
+                type="text"
+                list="patronymic-datalist"
+                formControlName="patronymic"
+                class="form-control"
+                (ngModelChange)="getSearchPatronymic()"
+                [class.is-invalid]="patronymic!.errors?.maxlength || patronymic!.errors?.pattern"
+              />
+              <div *ngIf="patronymic!.errors?.maxlength || patronymic!.errors?.pattern">
+                <small *ngIf="patronymic!.errors?.maxlength" class="text-danger"
+                  >Максимум 50 символов </small
+                >
+                <small *ngIf="patronymic!.errors?.pattern" class="text-danger"
+                  >Только русские буквы </small
+                >
+              </div>
+              <datalist id="patronymic-datalist">
+                <option
+                  *ngFor="let sugg of suggs.suggestions"
+                  [value]="sugg.value"
+                ></option>
+              </datalist>
+            </div>
+            <div class="form-group mb-3">
+              <label>Логин</label>
+              <input
+                type="text"
+                formControlName="login"
+                class="form-control"
+                [class.is-invalid]="login!.errors?.maxlength || login!.errors?.pattern"
+                [class.is-invalid]="login!.invalid && login!.touched"
+              />
+              <div *ngIf="login!.errors?.maxlength || login!.errors?.pattern">
+                <small *ngIf="login!.errors?.maxlength" class="text-danger"
+                  >Максимум 20 символов </small
+                >
+                <small *ngIf="login!.errors?.pattern" class="text-danger"
+                  >Только английские буквы </small
+                >
+              </div>
+              <div *ngIf="login!.invalid && login!.touched">
+                <small *ngIf="login!.errors?.required" class="text-danger"
+                  >Поле обязательно для заполнения</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label>Регион проживания</label>
+              <select class="form-select" formControlName="region">
+                <option selected>Выбрать</option>
+                <option *ngFor="let reg of rfReg">{{ reg.name }}</option>
+              </select>
+            </div>
+            <div class="form-group mb-3">
+              <label>Номер телефона</label>
+              <input
+                formControlName="phone"
+                type="text"
+                class="form-control"
+                prefix="+7 "
+                mask="(000) 000-00-00"
+                [class.is-invalid]="phone!.invalid && phone!.touched"
+              />
+              <div *ngIf="phone!.invalid && phone!.touched">
+                <small *ngIf="phone!.errors?.required" class="text-danger"
+                  >Поле обязательно для заполнения</small
+                >
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label>Email</label>
+              <input
+                formControlName="email"
+                type="text"
+                class="form-control input-autocomplete"
+                [class.is-invalid]="email!.invalid && email!.touched"
+              />
+              <div *ngIf="email!.invalid && email!.touched">
+                <small *ngIf="email!.errors?.required" class="text-danger"
+                  >Поле обязательно для заполнения</small
+                >
+                <small *ngIf="email!.errors?.pattern" class="text-danger"
+                  >Некорретный формат email </small
+                >
+              </div>
+            </div>
+            <div class="form-check mb-4">
+              <input [class.is-invalid]="subscribe!.invalid && subscribe!.touched" formControlName="subscribe"
+                type="checkbox"
+                class="form-check-input">
+              <label class="form-check-label">
+                Согласие на обработку персональных данных
+              </label>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button
+                [disabled]="!questionnaireForm.valid"
+                class="btn btn-primary"
+                type="submit"
+              >
+                Отправить
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

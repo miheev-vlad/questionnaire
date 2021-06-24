@@ -1,0 +1,10 @@
+.questionnaire-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.my-img-fluid {
+  width: 230px;
+}
